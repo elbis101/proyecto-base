@@ -1,17 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+use App\Specialty;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,7 +11,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 //specialty
-Route::get('/specialties','SpecialtyController@index');
-Route::get('/specialties/create','SpecialtyController@create'); //visita el registro
-Route::get('/specialties/{specialty}/edit','SpecialtyController@edit');
-Route::post('/specialties','SpecialtyController@store');//envia el formulario
+Route::get('/specialties',[App\Http\Controllers\SpecialtyController::class,'index'])->name('index');
+Route::get('/specialties/create',[App\Http\Controllers\SpecialtyController::class,'create'])->name('create'); //visita el registro
+Route::get('/specialties/{specialty}/edit',[App\Http\Controllers\SpecialtyController::class,'edit'])->name('edit'); 
+
+Route::post('/specialties', [App\Http\Controllers\SpecialtyController::class,'store'])->name('store');//envia el formulario
+Route::put('/specialties/{specialty}',[App\Http\Controllers\SpecialtyController::class,'update'])->name('update'); 
+Route::delete('/specialties/{specialty}',[App\Http\Controllers\SpecialtyController::class,'destroy'])->name('destroy'); 
+
+
+//doctor
+Route::resource('/doctors','App\Http\Controllers\DoctorController');
+
+
+
